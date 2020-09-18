@@ -7,6 +7,7 @@ from datetime import datetime, date, time, timedelta
 from collections import Counter
 import sys
 import random
+import requests
 
 app = flask.Flask(__name__)
 
@@ -29,7 +30,17 @@ def index():
         user = tweet.user.name
         tweets = tweet.text
         
- 
+    spoonacular_key = os.environ['spoonacular_auth_key']  
+    
+    url = "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + spoonacular_key+"&query=" + food_items[random_num]
+    
+    #x = "https://api.spoonacular.com/recipes/716429/information?apiKey=" + spoonacular_key +"&includeNutrition=true"
+    response = requests.get(url)
+
+    # Inspect some attributes of the `requests` repository
+    json_response = response.json()
+    print(json_response)
+
     return flask.render_template("index.html", u = user, t = tweets)
   
  
