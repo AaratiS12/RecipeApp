@@ -1,7 +1,8 @@
 <html>
+    <head> <link rel="stylesheet" href={{ url_for ('static', filename = 'style.css')}} /> </head>
     <body>
-    <h2>{{u}}</h2>
-    <h2>{{t}}</h2>
-     <img src={{image}}>
+    <h1>Tweet and Recipe for {{item}}</h1>
+    <h3>Author: {{u}} - {{t}}</h2>
+     <img src={{image}} width= 400 height = 400>
     </body>
 </html>
