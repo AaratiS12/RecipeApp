@@ -9,6 +9,7 @@ import sys
 import random
 import requests
 import json
+from flask import Flask, request, render_template
 
 app = flask.Flask(__name__)
 
@@ -29,19 +30,24 @@ def index():
     item = food_items[random_num]
    
     for tweet in auth_api.search(q=item, lang="en", result_type="popular", count = 1):
-        user = tweet.user.name
+        author = tweet.user.name
         tweets = tweet.text
-    print(tweet)
+        date = tweet.created_at
+    
+    #print(tweet)
     spoonacular_key = os.environ['spoonacular_auth_key']  
     url = "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + spoonacular_key+"&query=" + item +"&number=1"
     response = requests.get(url)
     json_response = response.json()
-    print(json_response)
+    #print(json_response)
+    d = date.date().strftime('%A %d %B %Y')
+    time = date.strftime("%I:%M %p")
     
-    #image_food = json_response['results'][0]['image']
-    image_food = "https://spoonacular.com/recipeImages/636830-312x231.jpg"
-    return flask.render_template("index.html", u = user, t = tweets, image= image_food, item = item)
-
+    image_food = json_response['results'][0]['image']
+    #image_food = "https://spoonacular.com/recipeImages/636830-312x231.jpg"
+    return flask.render_template("index.html", author = author, tweet = tweets, date = d, time = time, image= image_food, item = item)
+    
+    
 app.run(
     port=int(os.getenv('PORT', 8080)), 
     host=os.getenv('IP', '0.0.0.0')
