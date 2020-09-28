@@ -1,0 +1,13 @@
+<html>
+    <head> <link rel="stylesheet" href={{ url_for ('static', filename = 'styles.css')}} /> </head>
+    <body>
+    <h1>{{recipe_title}}</h1>
+    <h3>Author: {{author}} - {{tweet}}</h2>
+    <h3>Date of Tweet: {{date}} at Time {{time}}</h3>
+    <h3>{{prep_time}}</h3>
+    <h3>servings {{servings}}</h3> 
+    <a href={{src_url}}>RECIPE</a>
+    <h3>{{ingredient_list}}</h3>
+     <img src={{image}} >
+    </body>
+</html>

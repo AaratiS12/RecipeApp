@@ -19,31 +19,49 @@ def index():
     consumer_secret= os.environ['consumer_secret']
     access_token= os.environ['access_token']
     access_token_secret= os.environ['access_token_secret']
+    spoonacular_key = os.environ['spoonacular_auth_key']  
     
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     auth_api = API(auth)
     
-    food_items = ["ramen", "spaghetti", "burrito", "dumplings", "pesto pasta", "paneer", "quesadillas"]
+    food_items = ["pumpkin pie", "apple cider", "spaghetti squash", "sweet potato", "corn", "soup", "cranberry"]
     random_num = random.randint(0, len(food_items) - 1)
-    item = food_items[random_num]
+    item = food_items[5]
     
-    
-    for tweet in auth_api.search(q=item, lang="en", result_type="popular", count = 1):
+    '''Processing for Twitter'''
+    for tweet in auth_api.search(q=item, lang="en", result_type="recent", count = 1):
         author = tweet.user.name
         tweets = tweet.text
         date = tweet.created_at
     
-    spoonacular_key = os.environ['spoonacular_auth_key']  
-    url = "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + spoonacular_key+"&query=" + item +"&number=1"
-    response = requests.get(url)
+    '''Processing for Spoonacular'''
+    url_image = "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + spoonacular_key+"&query=" + item +"&number=1"
+    response = requests.get(url_image)
     json_response = response.json()
     d = date.date().strftime('%A %d %B %Y')
     time = date.strftime("%I:%M %p")
+    recipe_id = json_response['results'][0]['id']
+    #image_food = json_response['results'][0]['image']
+    recipe_title = json_response['results'][0]['title']
+    #Hardcoded Image link for testing
+    image_food = "https://spoonacular.com/recipeImages/636830-312x231.jpg"
     
-    image_food = json_response['results'][0]['image']
-    #image_food = "https://spoonacular.com/recipeImages/636830-312x231.jpg"
-    return flask.render_template("index.html", author = author, tweet = tweets, date = d, time = time, image= image_food, item = item)
+    url_image_ingredients = "https://api.spoonacular.com/recipes/"+ str(recipe_id)+ "/information?apiKey=" + spoonacular_key
+    response_ingredients = requests.get(url_image_ingredients)
+    json_response_ingredient = response_ingredients.json()
+    servings = json_response_ingredient["servings"]
+    prep_time = json_response_ingredient["readyInMinutes"]
+    src_url = json_response_ingredient["sourceUrl"]
+    ingredient_list = []
+    for ingredient in json_response_ingredient["extendedIngredients"]:
+        ingredient_list.append(ingredient["original"])
+    
+    
+    return flask.render_template(
+        "main_index.html", author = author, tweet = tweets, date = d, time = time, image= image_food,
+        recipe_title = recipe_title, servings= servings, prep_time = prep_time, 
+        src_url=src_url, ingredient_list = ingredient_list)
     
     
     

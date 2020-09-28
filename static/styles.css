@@ -1,0 +1,24 @@
+html {
+   background: rgb(196,196,196);
+   background: linear-gradient(#9198e5, #ff8000);
+}
+body {
+    
+    text-align: center;
+    
+    background-color:#050035;
+    color: #000000;
+    font-family: Helvetica;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    width:100%;
+    background-image:url("/static/fall.gifv");
+}
+
+img {
+  padding-left: 50px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 350px;
+  height: 350px;
+}

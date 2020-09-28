@@ -49,7 +49,7 @@ def my_form_post():
     
     image_food = json_response['results'][0]['image']
     #image_food = "https://spoonacular.com/recipeImages/636830-312x231.jpg"
-    return flask.render_template("index.html", author = author, tweet = tweets, date = d, time = time, image= image_food, item = item)
+    return flask.render_template("main_index.html", author = author, tweet = tweets, date = d, time = time, image= image_food, item = item)
     
 
 app.run(
