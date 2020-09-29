@@ -11,7 +11,7 @@ from flask import Flask, render_template, request
 
 app = flask.Flask(__name__)
 
-@app.route('/') #Python decorater
+@app.route('/')
 def index():
     consumer_key= os.environ['consumer_key']
     consumer_secret= os.environ['consumer_secret']
@@ -23,19 +23,22 @@ def index():
     auth.set_access_token(access_token, access_token_secret)
     auth_api = API(auth)
     
-    food_items = ["pumpkin pie", "apple cider", "spaghetti squash", "sweet potato", "corn", "soup", "cranberry"]
+    food_items = ["pumpkin", "apple pie", "squash", "sweet potato", "corn", "soup", "cranberry"]
     random_num = random.randint(0, len(food_items) - 1)
     item = food_items[random_num]
     print(item)
+    
     '''Processing for Twitter'''
-    search = auth_api.search(q=item, lang="en", result_type="recent", count = 1)
+    search = auth_api.search(q=item, lang="en", result_type="popular")
+    #print("Length is "+ str(len(search)))
+    random_num_tweet = random.randint(0, len(search)-1)
     if search:
-        for tweet in search:     
-            author = tweet.user.name
-            tweets = tweet.text
-            date = tweet.created_at
-            d = date.date().strftime('%A %d %B %Y')
-            time = date.strftime("%I:%M %p")
+        tweet = search[random_num_tweet] 
+        author = tweet.user.name
+        tweets = tweet.text
+        date = tweet.created_at
+        d = date.date().strftime('%A %d %B %Y')
+        time = date.strftime("%I:%M %p")
     else:
         author = "no author"
         tweets = "Tweet Error- no tweet found"
@@ -43,17 +46,15 @@ def index():
         time = "no time"
     
     '''Processing for Spoonacular'''
-    url_image = "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + spoonacular_key+"&query=" + item +"&number=1"
+    url_image = "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + spoonacular_key+"&query=" + item
     response = requests.get(url_image)
     json_response = response.json()
-    
-    
-    recipe_id = json_response['results'][0]['id']
-    image_food = json_response['results'][0]['image']
-    recipe_title = json_response['results'][0]['title']
-    #Hardcoded Image link for testing
-    #image_food = "https://spoonacular.com/recipeImages/636830-312x231.jpg"
-    
+    #print("Length2 is "+ str(len(json_response)))
+    random_num_recipe = random.randint(0, len(json_response)-1)
+   
+    recipe_id = json_response['results'][random_num_recipe]['id']
+    image_food = json_response['results'][random_num_recipe]['image']
+    recipe_title = json_response['results'][random_num_recipe]['title']
     url_image_ingredients = "https://api.spoonacular.com/recipes/"+ str(recipe_id)+ "/information?apiKey=" + spoonacular_key
     response_ingredients = requests.get(url_image_ingredients)
     json_response_ingredient = response_ingredients.json()
