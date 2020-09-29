@@ -27,8 +27,8 @@ def index():
     
     food_items = ["pumpkin pie", "apple cider", "spaghetti squash", "sweet potato", "corn", "soup", "cranberry"]
     random_num = random.randint(0, len(food_items) - 1)
-    item = food_items[5]
-    
+    item = food_items[random_num]
+    print(item)
     '''Processing for Twitter'''
     for tweet in auth_api.search(q=item, lang="en", result_type="recent", count = 1):
         author = tweet.user.name
@@ -42,10 +42,10 @@ def index():
     d = date.date().strftime('%A %d %B %Y')
     time = date.strftime("%I:%M %p")
     recipe_id = json_response['results'][0]['id']
-    #image_food = json_response['results'][0]['image']
+    image_food = json_response['results'][0]['image']
     recipe_title = json_response['results'][0]['title']
     #Hardcoded Image link for testing
-    image_food = "https://spoonacular.com/recipeImages/636830-312x231.jpg"
+    #image_food = "https://spoonacular.com/recipeImages/636830-312x231.jpg"
     
     url_image_ingredients = "https://api.spoonacular.com/recipes/"+ str(recipe_id)+ "/information?apiKey=" + spoonacular_key
     response_ingredients = requests.get(url_image_ingredients)

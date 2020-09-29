@@ -1,17 +1,18 @@
 html {
    background: rgb(196,196,196);
    background: linear-gradient(#9198e5, #ff8000);
+   background-image:url("/static/fall.gifv");
 }
 body {
-    
+    cursor: url('http://clipart-library.com/images_k/fall-leaves-transparent-png/fall-leaves-transparent-png-13.png'), default;
     text-align: center;
-    
-    background-color:#050035;
-    color: #000000;
-    font-family: Helvetica;
+    margin: 0 auto;
+    background-color:#CC5500;
+    color: #FFFFFF;
+    font-family: cursive;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    width:100%;
-    background-image:url("/static/fall.gifv");
+    width:50%;
+   
 }
 
 img {
