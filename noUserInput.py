@@ -2,9 +2,7 @@ import flask
 import os
 from tweepy import OAuthHandler
 from tweepy import API
-from tweepy import Cursor
 from datetime import datetime, date, time, timedelta
-from collections import Counter
 import sys
 import random
 import requests
@@ -30,17 +28,26 @@ def index():
     item = food_items[random_num]
     print(item)
     '''Processing for Twitter'''
-    for tweet in auth_api.search(q=item, lang="en", result_type="recent", count = 1):
-        author = tweet.user.name
-        tweets = tweet.text
-        date = tweet.created_at
+    search = auth_api.search(q=item, lang="en", result_type="recent", count = 1)
+    if search:
+        for tweet in search:     
+            author = tweet.user.name
+            tweets = tweet.text
+            date = tweet.created_at
+            d = date.date().strftime('%A %d %B %Y')
+            time = date.strftime("%I:%M %p")
+    else:
+        author = "no author"
+        tweets = "Tweet Error- no tweet found"
+        d = "no date" 
+        time = "no time"
     
     '''Processing for Spoonacular'''
     url_image = "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + spoonacular_key+"&query=" + item +"&number=1"
     response = requests.get(url_image)
     json_response = response.json()
-    d = date.date().strftime('%A %d %B %Y')
-    time = date.strftime("%I:%M %p")
+    
+    
     recipe_id = json_response['results'][0]['id']
     image_food = json_response['results'][0]['image']
     recipe_title = json_response['results'][0]['title']
