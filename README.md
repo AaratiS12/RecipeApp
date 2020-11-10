@@ -1,5 +1,6 @@
 # project1-as3243
 A web application that collects tweets using Tweepy and displays relevant images from Spoonacular using the Spoonacular API on my favorite foods.
+# View this app at: https://desolate-wildwood-92632.herokuapp.com/
 
 To use this repository, you must follow these steps:
 
