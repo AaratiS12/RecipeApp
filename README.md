@@ -1,7 +1,7 @@
 
 # Senior Capstone (CS490) Project1
 This is a Web Application that displays a Tweet using Tweepy and a relevant image from Spoonacular using the Spoonacular API from a users ingredient input.
-# View this app at: https://desolate-wildwood-92632.herokuapp.com/
+## View this app at: https://desolate-wildwood-92632.herokuapp.com/
 
 To use this repository, you must follow these steps:
 ## Initial Setup
