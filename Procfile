@@ -1,1 +1,1 @@
-web: python UserInput.py
+web: python userInput.py
