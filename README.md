@@ -1,5 +1,5 @@
 
-# Senior Capstone (CS490) Project1
+# RecipeApp
 This is a Web Application that displays a Tweet using Tweepy and a relevant image from Spoonacular using the Spoonacular API from a users ingredient input.
 
 Language/Technologies Used: **Python, Flask, Tweepy, Spoonacular API, Heroku**
